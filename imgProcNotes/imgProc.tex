@@ -1,0 +1,75 @@
+% @Author: Athul Vijayan
+% @Date:   2014-05-09 13:56:20
+% @Last Modified by:   athul
+% @Last Modified time: 2015-07-26 00:35:14
+
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\usepackage{placeins}
+\usepackage{rotating}
+\usepackage{wrapfig}
+\usepackage{bm}
+\usepackage[normalem]{ulem}
+\usepackage[table]{xcolor}
+\newcommand{\HRule}{\rule{\linewidth}{0.2mm}} % Defines a new command for the horizontal lines, change thickness here
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=cyan
+}
+\usepackage{array}
+\renewcommand{\P}{\mathbb{P}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%----------------------------------------------------------------------------------------
+%   TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\newcommand*{\titleGM}{\begingroup % Create the command for including the title page in the document
+\hbox{ % Horizontal box
+\hspace*{0.2\textwidth} % Whitespace to the left of the title page
+\rule{1pt}{\textheight} % Vertical line
+\hspace*{0.05\textwidth} % Whitespace between the vertical line and title page text
+\parbox[b]{0.75\textwidth}{ % Paragraph box which restricts text to less than the width of the page
+
+{\noindent\Huge\bfseries  Image processing}\\[2\baselineskip] % Title
+{\large \textit{Notes}}\\[4\baselineskip] % Tagline or further description
+{\Large \textsc{Athul Vijayan}} % Author name
+
+\vspace{0.5\textheight} % Whitespace between the title block and the publisher
+}}
+\endgroup}
+
+
+\begin{document}
+\titleGM % This command includes the title page
+\tableofcontents
+
+% =========================== content =========================
+\newpage
+\section{Filtering in Frequency domain\cite{gonzalez2009digital}} % (fold)
+\label{sec:filtering_in_frequency_domain}
+\begin{itemize}
+	\item Fourier series:\\
+		
+\end{itemize}
+% section filtering_in_frequency_domain (end)
+
+% ======================= References ==========================
+\newpage
+\bibliographystyle{plain}
+% argument is your BibTeX string definitions and bibliography database(s)
+% \bibliography{test}
+\bibliography{../../bibliography/imgProc}
+\end{document}
