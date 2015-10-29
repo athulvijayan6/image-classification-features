@@ -3,7 +3,7 @@
 # @Author: Athul Vijayan
 # @Date:   2015-08-05 19:59:29
 # @Last Modified by:   Athul
-# @Last Modified time: 2015-10-15 05:05:06
+# @Last Modified time: 2015-10-29 12:01:54
 
 import numpy as np
 import Image
@@ -20,8 +20,8 @@ imgBaseDir = '../dataset/naturalScenes/'
 featureBaseDir = 'features/naturalScenes'
 
 imgDir = ['street/', 'forest/', 'Opencountry/', 'highway/', 'tallbuilding/', 'mountain/', 'inside_city/', 'coast/']
-dataFile = 'features/naturalScenes_SIFT_features.pkl.gz'
-featureFile = 'features/naturalScenes_SIFT_points.pkl.gz'
+
+featureFile = 'features/naturalScenes_SIFT_features.pkl.gz'
 
 os.system('rm -r .tmp; mkdir .tmp')
 
@@ -41,31 +41,26 @@ for cls in xrange(len(imgDir)):
         with open ('.tmp/keys.key', 'rb') as f:
             numDesc, lenDesc = [int(i) for i in f.readline().split()]
             locs = np.zeros((4,))
-            desc = lf= np.zeros((lenDesc,), dtype=np.float)
+            desc = lf = np.zeros((lenDesc,), dtype=np.float)
             i = lenDesc
             j = 0
             for line in f.readlines():
                 vals = [float(n) for n in line.strip().split()]
                 if i == lenDesc:
                     locs = np.vstack((locs, vals))
-                    # lf = lf/np.sqrt(np.sum(lf**2))
+                    lf = lf/np.sqrt(np.sum(lf**2))
                     desc = np.vstack((desc, lf))
                     i = 0
                 else:
                     lf[i:i+len(vals)] = vals
                     i += len(vals)
             f.close()
-        # lf = lf/np.sqrt(np.sum(lf**2))
+        lf = lf/np.sqrt(np.sum(lf**2))
         desc = np.vstack((desc, lf))
         locs = locs[1:]
         desc = desc[2:]
         descs.append((locs, desc, cls))
         os.system('rm .tmp/tempImg.pgm .tmp/keys.key')
-
-with gzip.open(featureFile, 'wb') as f:
-    pickle.dump(descs, f)
-    f.close()
-print("Dumped SIFT descriptors into "+featureFile)
 
 shuffle(descs)
 # Now we that have all data, use bag of words kind of feature representation
@@ -133,7 +128,7 @@ for img in testData:
         testFeatures = feature
         testLabels = np.array([img[2]])
 
-with gzip.open(dataFile, 'wb') as f:
+with gzip.open(featureFile, 'wb') as f:
     pickle.dump(((trainFeatures, trainLabels), (valFeatures, valLabels), (testFeatures, testLabels)), f)
     f.close()
-print("Dumped features into "+dataFile)
+print("Dumped features into "+featureFile)
