@@ -3,7 +3,7 @@
 # @Author: Athul
 # @Date:   2015-10-02 13:08:32
 # @Last Modified by:   Athul
-# @Last Modified time: 2015-10-29 17:08:45
+# @Last Modified time: 2015-10-30 11:50:20
 
 import numpy as np
 import scipy.misc
@@ -25,7 +25,7 @@ featureBaseDir = 'features/CIFAR-10'
 dataFile = 'features/cifar10_gray_HOG_features.pkl.gz'
 
 for f in os.listdir(imgBaseDir):
-    if f.find('batch') != -1:
+    if f.find('_batch') != -1:
         with open(imgBaseDir+f, 'rb') as b:
             d = pickle.load(b)
             b.close()
@@ -38,8 +38,7 @@ for f in os.listdir(imgBaseDir):
             img = np.reshape(img, (3, 32, 32))
             img = np.transpose(img, [1, 2, 0])
             img = color.rgb2gray(img)
-            feature = hog(img, orientations=8, pixels_per_cell=(1, 1), cells_per_block=(1, 1), visualise=False, normalise=True)
-            feature = np.append(feature, cls)
+            feature = hog(img, orientations=4, pixels_per_cell=(2, 2), cells_per_block=(1, 1), visualise=False, normalise=True)
             if f[:-2] == 'data_batch':
                 try:
                     trainFeatures = np.vstack((trainFeatures, feature))
@@ -63,4 +62,5 @@ trainLabels = trainLabels[int(0.1*trainLabels.shape[0]): ]
 
 with gzip.open(dataFile, 'wb') as f:
     pickle.dump(((trainFeatures, trainLabels), (valFeatures, valLabels), (testFeatures, testLabels)), f)
+    f.close()
 print("Dumped HOG features into "+dataFile)

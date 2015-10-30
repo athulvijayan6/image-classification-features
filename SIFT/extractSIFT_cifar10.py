@@ -3,7 +3,7 @@
 # @Author: Athul Vijayan
 # @Date:   2015-08-05 19:59:29
 # @Last Modified by:   Athul
-# @Last Modified time: 2015-10-29 17:26:36
+# @Last Modified time: 2015-10-30 11:48:22
 import numpy as np
 import Image
 import os
@@ -25,7 +25,7 @@ os.system('rm -r .tmp; mkdir .tmp')
 
 trainData = testData = []
 for batchFile in os.listdir(imgBaseDir):
-    if batchFile.find('batch') != -1:
+    if batchFile.find('_batch') != -1:
         with open(imgBaseDir+batchFile, 'rb') as b:
             d = pickle.load(b)
             b.close()
@@ -36,6 +36,7 @@ for batchFile in os.listdir(imgBaseDir):
             img = pixels[idx] 
             img = np.reshape(img, (3, 32, 32))
             img = np.transpose(img, [1, 2, 0])
+            img = Image.fromarray(img)
             img = img.convert('L')
             img.save('.tmp/tempImg.pgm')
             # Execute the SIFT extractor
